@@ -441,6 +441,10 @@ my_print_defaults --defaults-file=/var/lib/mysql/my.cnf mysqld2
 
 ## Netstat listening ports
 
+* default main MariaDB 10.1 server on `3306`
+* second MariaDB 10.1 via mysqld_multi config setup on `3307`
+* Oracle MySQL 8.0 via `/etc/init.d/mysql8` on `3407` with MySQL X Plugin port `33060`
+
 ```
 netstat -plant | grep mysql
 tcp6       0      0 :::3306                 :::*                    LISTEN      7110/mysqld         
