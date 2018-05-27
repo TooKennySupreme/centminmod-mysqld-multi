@@ -1,3 +1,14 @@
+# Contents
+
+* [MariaDB mysqld_multi](https://github.com/centminmod/centminmod-mysqld-multi#mariadb-mysqld_multi---multiple-mariadb-mysql-server-setup)
+* [Main MariaDB MySQL Server](https://github.com/centminmod/centminmod-mysqld-multi#main-mariadb-mysql-server)
+* [Second MariaDB MySQL Server](https://github.com/centminmod/centminmod-mysqld-multi#second-mariadb-mysql-server)
+* [Oracle MySQL 8.0](https://github.com/centminmod/centminmod-mysqld-multi#oracle-mysql-80)
+  * [Oracle MySQL 8.0.11 Details](https://github.com/centminmod/centminmod-mysqld-multi#oracle-mysql-8011)
+  * [MariaDB MySQL 10.1 main + Oracle MySQL 8.0.11](https://github.com/centminmod/centminmod-mysqld-multi#oracle-mysql-8011--mariadb-mysql-101-main)
+  * [MariaDB MySQL 10.1 second instance via mysqld_multi + Oracle MySQL 8.0.11](https://github.com/centminmod/centminmod-mysqld-multi#oracle-mysql-8011--mariadb-mysql-101-second-instance-via-mysqld_multi)
+  * [Netstat listening ports](https://github.com/centminmod/centminmod-mysqld-multi#netstat-listening-ports)
+
 # MariaDB mysqld_multi - multiple MariaDB MySQL server setup
 
 Setup multiple MariaDB MySQL server instances on the same [Centmin Mod LEMP Stack](https://centminmod.com/) server. Optional Oracle MySQL 8.0.11 Server install using separate `/etc/init.d/mysql8` startup script.
@@ -235,7 +246,7 @@ my_print_defaults --defaults-file=/usr/local/mysql/my.cnf mysqld
 --innodb_doublewrite=0
 ```
 
-## Oracle MySQL 8.0.11 + MariaDB MySQL 10.1 main 
+## MariaDB MySQL 10.1 main + Oracle MySQL 8.0.11 
 
 on port `3306` where main `/etc/my.cnf` moved to `/var/lib/mysql/my.cnf`
 
@@ -319,7 +330,7 @@ my_print_defaults --defaults-file=/var/lib/mysql/my.cnf mysqld
 --innodb_flush_neighbors=0
 ```
 
-## Oracle MySQL 8.0.11 + MariaDB MySQL 10.1 second instance via mysqld_multi 
+## MariaDB MySQL 10.1 second instance via mysqld_multi + Oracle MySQL 8.0.11 
 
 on port `3307` where main `/etc/my.cnf` moved to `/var/lib/mysql/my.cnf`
 
