@@ -17,6 +17,7 @@ mysql_cmd() {
   mysqlargb=$3
   mysqlargc=$4
   mysqlargd=$5
+  echo "$mysqlclient -P $PORT -S $SOCKET $mysqlarga $mysqlargb $mysqlargc $mysqlargd"
   $mysqlclient -P $PORT -S $SOCKET $mysqlarga $mysqlargb $mysqlargc $mysqlargd
 }
 

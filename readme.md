@@ -473,6 +473,7 @@ mysql-control 8 mysqladmin ver
 
 ```
 /usr/bin/mysql-control 1 mysqladmin ver
+mysqladmin -P 3306 -S /var/lib/mysql/mysql.sock ver   
 mysqladmin  Ver 9.1 Distrib 10.1.32-MariaDB, for Linux on x86_64
 Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
 
@@ -480,9 +481,9 @@ Server version          10.1.32-MariaDB
 Protocol version        10
 Connection              Localhost via UNIX socket
 UNIX socket             /var/lib/mysql/mysql.sock
-Uptime:                 44 min 6 sec
+Uptime:                 1 hour 6 min 44 sec
 
-Threads: 1  Questions: 3  Slow queries: 0  Opens: 17  Flush tables: 1  Open tables: 11  Queries per second avg: 0.001
+Threads: 1  Questions: 18  Slow queries: 0  Opens: 17  Flush tables: 1  Open tables: 11  Queries per second avg: 0.004
 ```
 
 check MySQL server's default MySQL data directory variable value for `datadir`
@@ -495,7 +496,8 @@ check MySQL server's default MySQL data directory variable value for `datadir`
 ### mysql-control Second MariaDB 10.1
 
 ```
-/usr/bin/mysql-control 2 mysqladmin ver 
+/usr/bin/mysql-control 2 mysqladmin ver
+mysqladmin -P 3307 -S /var/lib/mysql2/mysql.sock ver   
 mysqladmin  Ver 9.1 Distrib 10.1.32-MariaDB, for Linux on x86_64
 Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
 
@@ -503,9 +505,9 @@ Server version          10.1.32-MariaDB
 Protocol version        10
 Connection              Localhost via UNIX socket
 UNIX socket             /var/lib/mysql2/mysql.sock
-Uptime:                 31 min 26 sec
+Uptime:                 53 min 27 sec
 
-Threads: 1  Questions: 2  Slow queries: 0  Opens: 17  Flush tables: 1  Open tables: 11  Queries per second avg: 0.001
+Threads: 1  Questions: 5  Slow queries: 0  Opens: 17  Flush tables: 1  Open tables: 11  Queries per second avg: 0.001
 ```
 
 check MySQL server's default MySQL data directory variable value for `datadir`
@@ -518,7 +520,8 @@ check MySQL server's default MySQL data directory variable value for `datadir`
 ### mysql-control Oracle MySQL 8.0
 
 ```
-/usr/bin/mysql-control 8 mysqladmin ver 
+/usr/bin/mysql-control 8 mysqladmin ver
+mysqladmin -P 3407 -S /opt/mysql/data/mysql.sock ver   
 mysqladmin  Ver 9.1 Distrib 10.1.32-MariaDB, for Linux on x86_64
 Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
 
@@ -526,9 +529,9 @@ Server version          8.0.11
 Protocol version        10
 Connection              Localhost via UNIX socket
 UNIX socket             /opt/mysql/data/mysql.sock
-Uptime:                 43 min 55 sec
+Uptime:                 1 hour 5 min 16 sec
 
-Threads: 2  Questions: 5  Slow queries: 0  Opens: 110  Flush tables: 2  Open tables: 86  Queries per second avg: 0.001
+Threads: 2  Questions: 13  Slow queries: 0  Opens: 127  Flush tables: 2  Open tables: 103  Queries per second avg: 0.003
 ```
 
 check MySQL server's default MySQL data directory variable value for `datadir`
