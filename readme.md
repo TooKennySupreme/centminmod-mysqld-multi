@@ -235,9 +235,9 @@ my_print_defaults --defaults-file=/usr/local/mysql/my.cnf mysqld
 --innodb_doublewrite=0
 ```
 
-## with MariaDB MySQL 10.1 main 
+## Oracle MySQL 8.0.11 + MariaDB MySQL 10.1 main 
 
-on port `3306`
+on port `3306` where main `/etc/my.cnf` moved to `/var/lib/mysql/my.cnf`
 
 ```
 mysqladmin ver
@@ -319,9 +319,9 @@ my_print_defaults --defaults-file=/var/lib/mysql/my.cnf mysqld
 --innodb_flush_neighbors=0
 ```
 
-## with MariaDB MySQL 10.1 second instance via mysqld_multi 
+## Oracle MySQL 8.0.11 + MariaDB MySQL 10.1 second instance via mysqld_multi 
 
-on port `3307`
+on port `3307` where main `/etc/my.cnf` moved to `/var/lib/mysql/my.cnf`
 
 ```
 mysqld_multi --defaults-file=/var/lib/mysql/my.cnf stop 2 
@@ -428,7 +428,7 @@ my_print_defaults --defaults-file=/var/lib/mysql/my.cnf mysqld2
 --innodb_flush_neighbors=0
 ```
 
-Netstat listening ports
+## Netstat listening ports
 
 ```
 netstat -plant | grep mysql
