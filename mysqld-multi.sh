@@ -97,6 +97,70 @@ mysqld_multisetup() {
   # check mysqld2 server instance version
   echo "mysqladmin -P 3307 ver -S /var/lib/mysql2/mysql.sock"
   mysqladmin -P 3307 ver -S /var/lib/mysql2/mysql.sock
+
+  # check mysql instances listening ports
+  echo
+  echo "netstat -plant | grep mysql"
+  netstat -plant | grep mysql
+
+  mysqld_multi stop 2
+  mysqld_mylti report 2
+}
+
+mysql_eight() {
+  cd /usr/local
+  wget https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-8.0.11-el7-x86_64.tar.gz
+  tar zxvf mysql-8.0.11-el7-x86_64.tar.gz
+  ln -s /usr/local/mysql-8.0.11-el7-x86_64 mysql
+  cd mysql
+  mkdir mysql-files
+  chown mysql:mysql mysql-files
+  chmod 750 mysql-files
+  rm -rf /opt/mysql; mkdir -p /opt/mysql/data; chown mysql:mysql /opt/mysql/data
+  wget -O /usr/local/mysql/my.cnf https://gist.github.com/centminmod/7351768dbe6806f9db99f65cbe795615/raw/z-my.cnf
+  sed -i 's|port=3307|port=3407|g' /usr/local/mysql/my.cnf
+  cat /usr/local/mysql/my.cnf
+  mv /etc/my.cnf /var/lib/mysql/my.cnf
+  mv /root/.my.cnf /root/.my.cnf-moved
+  bin/mysqld --defaults-file=/usr/local/mysql/my.cnf --initialize-insecure --user=mysql --port=3407 --basedir=/usr/local/mysql --datadir=/opt/mysql/data --default_authentication_plugin=mysql_native_password
+  bin/mysql_ssl_rsa_setup --verbose --datadir=/opt/mysql/data
+  \cp -fa support-files/mysql.server /etc/init.d/mysql8
+  sed -i 's|^basedir=|basedir=\/usr\/local\/mysql|' /etc/init.d/mysql8
+  sed -i 's|^datadir=|datadir=\/opt\/mysql\/data|' /etc/init.d/mysql8
+  if [ -f /proc/user_beancounters ]; then sed -i 's/#!\/bin\/sh/#!\/bin\/sh\nif [ -f \/proc\/user_beancounters ]; then\nulimit -s 256\nfi\n/g' /etc/init.d/mysql8; fi
+  service mysql8 start
+  service mysql8 status
+  chkconfig mysql8 on
+
+  # bin/mysql -u root -p
+  THEMYSQLPASS=$(awk -F '=' '/password/ {print $2}' /root/.my.cnf-moved)
+  echo $THEMYSQLPASS
+  bin/mysql -P 3407 -S /opt/mysql/data/mysql.sock -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$THEMYSQLPASS'; FLUSH PRIVILEGES;"
+  mv /root/.my.cnf-moved /root/.my.cnf
+  /usr/local/mysql/bin/mysqladmin -P 3407 -S /opt/mysql/data/mysql.sock ver
+  
+  echo
+  echo "my_print_defaults --defaults-file=/usr/local/mysql/my.cnf client"
+  my_print_defaults --defaults-file=/usr/local/mysql/my.cnf client
+  echo
+  echo "my_print_defaults --defaults-file=/usr/local/mysql/my.cnf mysqld"
+  my_print_defaults --defaults-file=/usr/local/mysql/my.cnf mysqld
+  echo
+  echo "my_print_defaults --defaults-file=/usr/local/mysql/my.cnf mysqld_safe"
+  my_print_defaults --defaults-file=/usr/local/mysql/my.cnf mysqld_safe
+
+  # check mysql instances listening ports
+  echo
+  echo "netstat -plant | grep mysql"
+  netstat -plant | grep mysql
+
+  mysqld_multi --defaults-file=/var/lib/mysql/my.cnf start 2
+  mysqld_multi --defaults-file=/var/lib/mysql/my.cnf report 2
+
+  # check mysql instances listening ports
+  echo
+  echo "netstat -plant | grep mysql"
+  netstat -plant | grep mysql
 }
 
 #########################################################
@@ -104,7 +168,8 @@ case $1 in
   install )
     mysqld_multisetup
     ;;
-  pattern )
+  mysql8 )
+    mysql_eight
     ;;
   pattern )
     ;;
@@ -113,6 +178,10 @@ case $1 in
   pattern )
     ;;
   * )
+    echo
+    echo "Usage: "
+    echo "$0 {insall|mysql8}"
+    echo
     ;;
 esac
 exit
