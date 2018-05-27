@@ -18,32 +18,36 @@ mysql_cmd() {
   mysqlargc=$4
   mysqlargd=$5
   if [[ "$mysqlclient" = 'show-engines' ]]; then
-    echo "mysql -P $PORT -S $SOCKET -e \"SHOW ENGINES;\""
-    mysql -P $PORT -S $SOCKET -e "SHOW ENGINES;"
+    echo "${MYSQLEIGHT_BINDIR}mysql -P $PORT -S $SOCKET -e \"SHOW ENGINES;\""
+    ${MYSQLEIGHT_BINDIR}mysql -P $PORT -S $SOCKET -e "SHOW ENGINES;"
   else
-    echo "$mysqlclient -P $PORT -S $SOCKET $mysqlarga $mysqlargb $mysqlargc $mysqlargd"
-    $mysqlclient -P $PORT -S $SOCKET $mysqlarga $mysqlargb $mysqlargc $mysqlargd
+    echo "${MYSQLEIGHT_BINDIR}${mysqlclient} -P $PORT -S $SOCKET $mysqlarga $mysqlargb $mysqlargc $mysqlargd"
+    ${MYSQLEIGHT_BINDIR}${mysqlclient} -P $PORT -S $SOCKET $mysqlarga $mysqlargb $mysqlargc $mysqlargd
   fi
 }
 
 #########################################################
 case $1 in
   1 )
+MYSQLEIGHT_BINDIR=""
 PORT='3306'
 SOCKET='/var/lib/mysql/mysql.sock'
 mysql_cmd $2 $3 $4 $5 $6
     ;;
   2 )
+MYSQLEIGHT_BINDIR=""
 PORT='3307'
 SOCKET='/var/lib/mysql2/mysql.sock'
 mysql_cmd $2 $3 $4 $5 $6
     ;;
   3 )
+MYSQLEIGHT_BINDIR=""
 PORT='3308'
 SOCKET='/var/lib/mysql3/mysql.sock'
 mysql_cmd $2 $3 $4 $5 $6
     ;;
   8 )
+MYSQLEIGHT_BINDIR='/usr/local/mysql/bin/'
 PORT='3407'
 SOCKET='/opt/mysql/data/mysql.sock'
 mysql_cmd $2 $3 $4 $5 $6

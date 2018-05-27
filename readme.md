@@ -608,18 +608,22 @@ mysql -P 3307 -S /var/lib/mysql2/mysql.sock -e "SHOW ENGINES;"
 ### mysql-control Oracle MySQL 8.0
 
 ```
-/usr/bin/mysql-control 8 mysqladmin ver
-mysqladmin -P 3407 -S /opt/mysql/data/mysql.sock ver   
-mysqladmin  Ver 9.1 Distrib 10.1.32-MariaDB, for Linux on x86_64
-Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+/usr/bin/mysql-control 8 mysqladmin ver 
+/usr/local/mysql/bin/mysqladmin -P 3407 -S /opt/mysql/data/mysql.sock ver   
+/usr/local/mysql/bin/mysqladmin  Ver 8.0.11 for el7 on x86_64 (MySQL Community Server - GPL)
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
 
 Server version          8.0.11
 Protocol version        10
 Connection              Localhost via UNIX socket
 UNIX socket             /opt/mysql/data/mysql.sock
-Uptime:                 1 hour 5 min 16 sec
+Uptime:                 1 hour 44 min 44 sec
 
-Threads: 2  Questions: 13  Slow queries: 0  Opens: 127  Flush tables: 2  Open tables: 103  Queries per second avg: 0.003
+Threads: 2  Questions: 10  Slow queries: 0  Opens: 110  Flush tables: 2  Open tables: 86  Queries per second avg: 0.001
 ```
 
 check MySQL server's default MySQL data directory variable value for `datadir`
