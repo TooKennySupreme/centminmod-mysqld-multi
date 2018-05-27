@@ -469,7 +469,7 @@ mysql-control 3 mysqladmin ver
 mysql-control 8 mysqladmin ver
 ```
 
-Main MariaDB 10.1
+### mysql-control Main MariaDB 10.1
 
 ```
 /usr/bin/mysql-control 1 mysqladmin ver
@@ -485,7 +485,14 @@ Uptime:                 44 min 6 sec
 Threads: 1  Questions: 3  Slow queries: 0  Opens: 17  Flush tables: 1  Open tables: 11  Queries per second avg: 0.001
 ```
 
-Second MariaDB 10.1
+check MySQL server's default MySQL data directory variable value for `datadir`
+
+```
+/usr/bin/mysql-control 1 mysqladmin var | grep datadir | tr -s ' '
+| datadir | /var/lib/mysql/ |
+```
+
+### mysql-control Second MariaDB 10.1
 
 ```
 /usr/bin/mysql-control 2 mysqladmin ver 
@@ -501,7 +508,14 @@ Uptime:                 31 min 26 sec
 Threads: 1  Questions: 2  Slow queries: 0  Opens: 17  Flush tables: 1  Open tables: 11  Queries per second avg: 0.001
 ```
 
-Oracle MySQL 8.0
+check MySQL server's default MySQL data directory variable value for `datadir`
+
+```
+/usr/bin/mysql-control 2 mysqladmin var | grep datadir | tr -s ' ' 
+| datadir | /var/lib/mysql2/ |
+```
+
+### mysql-control Oracle MySQL 8.0
 
 ```
 /usr/bin/mysql-control 8 mysqladmin ver 
@@ -515,4 +529,11 @@ UNIX socket             /opt/mysql/data/mysql.sock
 Uptime:                 43 min 55 sec
 
 Threads: 2  Questions: 5  Slow queries: 0  Opens: 110  Flush tables: 2  Open tables: 86  Queries per second avg: 0.001
+```
+
+check MySQL server's default MySQL data directory variable value for `datadir`
+
+```
+/usr/bin/mysql-control 8 mysqladmin var | grep datadir | tr -s ' ' 
+| datadir | /opt/mysql/data/ |
 ```
