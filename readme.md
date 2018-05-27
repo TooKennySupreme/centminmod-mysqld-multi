@@ -1,13 +1,14 @@
 # Contents
 
-* [MariaDB mysqld_multi](https://github.com/centminmod/centminmod-mysqld-multi#mariadb-mysqld_multi---multiple-mariadb-mysql-server-setup)
-* [Main MariaDB MySQL Server](https://github.com/centminmod/centminmod-mysqld-multi#main-mariadb-mysql-server)
-* [Second MariaDB MySQL Server](https://github.com/centminmod/centminmod-mysqld-multi#second-mariadb-mysql-server)
-* [Oracle MySQL 8.0](https://github.com/centminmod/centminmod-mysqld-multi#oracle-mysql-80)
-  * [Oracle MySQL 8.0.11 Details](https://github.com/centminmod/centminmod-mysqld-multi#oracle-mysql-8011)
-  * [MariaDB MySQL 10.1 main + Oracle MySQL 8.0.11](https://github.com/centminmod/centminmod-mysqld-multi#oracle-mysql-8011--mariadb-mysql-101-main)
-  * [MariaDB MySQL 10.1 second instance via mysqld_multi + Oracle MySQL 8.0.11](https://github.com/centminmod/centminmod-mysqld-multi#oracle-mysql-8011--mariadb-mysql-101-second-instance-via-mysqld_multi)
-  * [Netstat listening ports](https://github.com/centminmod/centminmod-mysqld-multi#netstat-listening-ports)
+* [MariaDB mysqld_multi](#mariadb-mysqld_multi---multiple-mariadb-mysql-server-setup)
+* [Main MariaDB MySQL Server](#main-mariadb-mysql-server)
+* [Second MariaDB MySQL Server](#second-mariadb-mysql-server)
+* [Oracle MySQL 8.0](#oracle-mysql-80)
+  * [Oracle MySQL 8.0.11 Details](#oracle-mysql-8011)
+  * [MariaDB MySQL 10.1 main + Oracle MySQL 8.0.11](#oracle-mysql-8011--mariadb-mysql-101-main)
+  * [MariaDB MySQL 10.1 second instance via mysqld_multi + Oracle MySQL 8.0.11](#oracle-mysql-8011--mariadb-mysql-101-second-instance-via-mysqld_multi)
+  * [Netstat listening ports](#netstat-listening-ports)
+  * [mysql-control file](#mysql-control-file)
 
 # MariaDB mysqld_multi - multiple MariaDB MySQL server setup
 
@@ -451,4 +452,67 @@ tcp6       0      0 :::3306                 :::*                    LISTEN      
 tcp6       0      0 :::3307                 :::*                    LISTEN      7019/mysqld         
 tcp6       0      0 :::3407                 :::*                    LISTEN      7527/mysqld         
 tcp6       0      0 :::33060                :::*                    LISTEN      7527/mysqld  
+```
+
+## mysql-control file
+
+Custom script to manage MySQL clients for multople MariaDB 10.1 and MySQL 8.0 servers.
+
+```
+/usr/bin/mysql-control
+
+Usage:
+
+mysql-control 1 mysqladmin ver
+mysql-control 2 mysqladmin ver
+mysql-control 3 mysqladmin ver
+mysql-control 8 mysqladmin ver
+```
+
+Main MariaDB 10.1
+
+```
+/usr/bin/mysql-control 1 mysqladmin ver
+mysqladmin  Ver 9.1 Distrib 10.1.32-MariaDB, for Linux on x86_64
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Server version          10.1.32-MariaDB
+Protocol version        10
+Connection              Localhost via UNIX socket
+UNIX socket             /var/lib/mysql/mysql.sock
+Uptime:                 44 min 6 sec
+
+Threads: 1  Questions: 3  Slow queries: 0  Opens: 17  Flush tables: 1  Open tables: 11  Queries per second avg: 0.001
+```
+
+Second MariaDB 10.1
+
+```
+/usr/bin/mysql-control 2 mysqladmin ver 
+mysqladmin  Ver 9.1 Distrib 10.1.32-MariaDB, for Linux on x86_64
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Server version          10.1.32-MariaDB
+Protocol version        10
+Connection              Localhost via UNIX socket
+UNIX socket             /var/lib/mysql2/mysql.sock
+Uptime:                 31 min 26 sec
+
+Threads: 1  Questions: 2  Slow queries: 0  Opens: 17  Flush tables: 1  Open tables: 11  Queries per second avg: 0.001
+```
+
+Oracle MySQL 8.0
+
+```
+/usr/bin/mysql-control 8 mysqladmin ver 
+mysqladmin  Ver 9.1 Distrib 10.1.32-MariaDB, for Linux on x86_64
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Server version          8.0.11
+Protocol version        10
+Connection              Localhost via UNIX socket
+UNIX socket             /opt/mysql/data/mysql.sock
+Uptime:                 43 min 55 sec
+
+Threads: 2  Questions: 5  Slow queries: 0  Opens: 110  Flush tables: 2  Open tables: 86  Queries per second avg: 0.001
 ```

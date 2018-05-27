@@ -161,6 +161,12 @@ mysql_eight() {
   echo
   echo "netstat -plant | grep mysql"
   netstat -plant | grep mysql
+
+  echo
+  echo "setup mysql-control file"
+  wget -O /usr/bin/mysql-control https://github.com/centminmod/centminmod-mysqld-multi/raw/master/mysql-control.sh
+  chmod +x /usr/bin/mysql-control
+  echo
 }
 
 #########################################################
