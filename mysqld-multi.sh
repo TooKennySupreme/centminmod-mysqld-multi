@@ -90,6 +90,9 @@ mysqld_multisetup() {
   echo "mysql -P 3307 -S /var/lib/mysql2/mysql.sock -e \"UPDATE mysql.user SET Password = PASSWORD('$THEMYSQLPASS') WHERE User = 'root'; FLUSH PRIVILEGES;\""
   mysql -P 3307 -S /var/lib/mysql2/mysql.sock -e "UPDATE mysql.user SET Password = PASSWORD('$THEMYSQLPASS') WHERE User = 'root'; FLUSH PRIVILEGES;"
   mv /root/.my.cnf-tempmv /root/.my.cnf
+  echo "echo \"GRANT SHUTDOWN ON *.* TO $user@localhost IDENTIFIED BY '$pass'\" | mysql -P 3307 -S /var/lib/mysql2/mysql.sock"
+  echo "GRANT SHUTDOWN ON *.* TO $user@localhost IDENTIFIED BY '$pass'" | mysql -P 3307 -S /var/lib/mysql2/mysql.sock
+  mysql -P 3307 -S /var/lib/mysql2/mysql.sock -e "SHOW GRANTS for $user@localhost;"
 
   # check mysqld2 server instance version
   echo "mysqladmin -P 3307 ver -S /var/lib/mysql2/mysql.sock"

@@ -6,6 +6,14 @@ Setup multiple MariaDB MySQL server instances on the same [Centmin Mod LEMP Stac
 * https://dev.mysql.com/doc/refman/5.6/en/mysqld-multi.html
 * https://dev.mysql.com/doc/refman/5.7/en/mysqld-multi.html
 
+`mysqld2` second MariaDB server instance report status
+
+```
+mysqld_multi report
+Reporting MariaDB servers
+MariaDB server from group: mysqld2 is running
+```
+
 # Main MariaDB MySQL Server
 
 Default main MariaDB 10.1 MySQL server `mysqld`
