@@ -156,6 +156,9 @@ mysql_eight() {
 
   mysqld_multi --defaults-file=/var/lib/mysql/my.cnf start 2
   mysqld_multi --defaults-file=/var/lib/mysql/my.cnf report 2
+  if [ ! $(grep 'my.cnf start 2' /etc/rc.local) ]; then
+    echo "mysqld_multi --defaults-file=/var/lib/mysql/my.cnf start 2" >> /etc/rc.local
+  fi
 
   # check mysql instances listening ports
   echo

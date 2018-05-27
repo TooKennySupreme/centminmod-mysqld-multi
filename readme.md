@@ -45,6 +45,22 @@ Threads: 1  Questions: 3  Slow queries: 0  Opens: 17  Flush tables: 1  Open tabl
 ```
 
 ```
+mysql -e "SHOW ENGINES;"
++--------------------+---------+--------------------------------------------------------------------------------------------------+--------------+------+------------+
+| Engine             | Support | Comment                                                                                          | Transactions | XA   | Savepoints |
++--------------------+---------+--------------------------------------------------------------------------------------------------+--------------+------+------------+
+| CSV                | YES     | CSV storage engine                                                                               | NO           | NO   | NO         |
+| MRG_MyISAM         | YES     | Collection of identical MyISAM tables                                                            | NO           | NO   | NO         |
+| MyISAM             | YES     | MyISAM storage engine                                                                            | NO           | NO   | NO         |
+| SEQUENCE           | YES     | Generated tables filled with sequential values                                                   | YES          | NO   | YES        |
+| MEMORY             | YES     | Hash based, stored in memory, useful for temporary tables                                        | NO           | NO   | NO         |
+| PERFORMANCE_SCHEMA | YES     | Performance Schema                                                                               | NO           | NO   | NO         |
+| Aria               | YES     | Crash-safe tables with MyISAM heritage                                                           | NO           | NO   | NO         |
+| InnoDB             | DEFAULT | Percona-XtraDB, Supports transactions, row-level locking, foreign keys and encryption for tables | YES          | YES  | YES        |
++--------------------+---------+--------------------------------------------------------------------------------------------------+--------------+------+------------+
+```
+
+```
 my_print_defaults --defaults-file=/etc/my.cnf mysqld
 --ignore_db_dirs=cmsetiofiotest
 --local-infile=0
@@ -126,6 +142,22 @@ UNIX socket             /var/lib/mysql2/mysql.sock
 Uptime:                 19 min 7 sec
 
 Threads: 1  Questions: 20  Slow queries: 0  Opens: 17  Flush tables: 1  Open tables: 11  Queries per second avg: 0.017
+```
+
+```
+mysql -P 3307 -S /var/lib/mysql2/mysql.sock -e "SHOW ENGINES;"
++--------------------+---------+--------------------------------------------------------------------------------------------------+--------------+------+------------+
+| Engine             | Support | Comment                                                                                          | Transactions | XA   | Savepoints |
++--------------------+---------+--------------------------------------------------------------------------------------------------+--------------+------+------------+
+| CSV                | YES     | CSV storage engine                                                                               | NO           | NO   | NO         |
+| MRG_MyISAM         | YES     | Collection of identical MyISAM tables                                                            | NO           | NO   | NO         |
+| MyISAM             | YES     | MyISAM storage engine                                                                            | NO           | NO   | NO         |
+| SEQUENCE           | YES     | Generated tables filled with sequential values                                                   | YES          | NO   | YES        |
+| MEMORY             | YES     | Hash based, stored in memory, useful for temporary tables                                        | NO           | NO   | NO         |
+| PERFORMANCE_SCHEMA | YES     | Performance Schema                                                                               | NO           | NO   | NO         |
+| Aria               | YES     | Crash-safe tables with MyISAM heritage                                                           | NO           | NO   | NO         |
+| InnoDB             | DEFAULT | Percona-XtraDB, Supports transactions, row-level locking, foreign keys and encryption for tables | YES          | YES  | YES        |
++--------------------+---------+--------------------------------------------------------------------------------------------------+--------------+------+------------+
 ```
 
 ```
@@ -217,6 +249,23 @@ UNIX socket             /opt/mysql/data/mysql.sock
 Uptime:                 2 min 28 sec
 
 Threads: 2  Questions: 3  Slow queries: 0  Opens: 110  Flush tables: 2  Open tables: 86  Queries per second avg: 0.020
+```
+
+```
+mysql -P 3407 -S /opt/mysql/data/mysql.sock -e "SHOW ENGINES;"
++--------------------+---------+----------------------------------------------------------------+--------------+------+------------+
+| Engine             | Support | Comment                                                        | Transactions | XA   | Savepoints |
++--------------------+---------+----------------------------------------------------------------+--------------+------+------------+
+| FEDERATED          | NO      | Federated MySQL storage engine                                 | NULL         | NULL | NULL       |
+| MEMORY             | YES     | Hash based, stored in memory, useful for temporary tables      | NO           | NO   | NO         |
+| InnoDB             | DEFAULT | Supports transactions, row-level locking, and foreign keys     | YES          | YES  | YES        |
+| PERFORMANCE_SCHEMA | YES     | Performance Schema                                             | NO           | NO   | NO         |
+| MyISAM             | YES     | MyISAM storage engine                                          | NO           | NO   | NO         |
+| MRG_MYISAM         | YES     | Collection of identical MyISAM tables                          | NO           | NO   | NO         |
+| BLACKHOLE          | YES     | /dev/null storage engine (anything you write to it disappears) | NO           | NO   | NO         |
+| CSV                | YES     | CSV storage engine                                             | NO           | NO   | NO         |
+| ARCHIVE            | YES     | Archive storage engine                                         | NO           | NO   | NO         |
++--------------------+---------+----------------------------------------------------------------+--------------+------+------------+
 ```
 
 ```
@@ -459,7 +508,7 @@ tcp6       0      0 :::33060                :::*                    LISTEN      
 Custom script to manage MySQL clients for multople MariaDB 10.1 and MySQL 8.0 servers.
 
 ```
-/usr/bin/mysql-control
+mysql-control
 
 Usage:
 
@@ -467,6 +516,11 @@ mysql-control 1 mysqladmin ver
 mysql-control 2 mysqladmin ver
 mysql-control 3 mysqladmin ver
 mysql-control 8 mysqladmin ver
+
+mysql-control 1 show-engines
+mysql-control 2 show-engines
+mysql-control 3 show-engines
+mysql-control 8 show-engines
 ```
 
 ### mysql-control Main MariaDB 10.1
@@ -493,6 +547,23 @@ check MySQL server's default MySQL data directory variable value for `datadir`
 | datadir | /var/lib/mysql/ |
 ```
 
+```
+/usr/bin/mysql-control 1 show-engines
+mysql -P 3306 -S /var/lib/mysql/mysql.sock -e "SHOW ENGINES;"
++--------------------+---------+--------------------------------------------------------------------------------------------------+--------------+------+------------+
+| Engine             | Support | Comment                                                                                          | Transactions | XA   | Savepoints |
++--------------------+---------+--------------------------------------------------------------------------------------------------+--------------+------+------------+
+| CSV                | YES     | CSV storage engine                                                                               | NO           | NO   | NO         |
+| MRG_MyISAM         | YES     | Collection of identical MyISAM tables                                                            | NO           | NO   | NO         |
+| MyISAM             | YES     | MyISAM storage engine                                                                            | NO           | NO   | NO         |
+| SEQUENCE           | YES     | Generated tables filled with sequential values                                                   | YES          | NO   | YES        |
+| MEMORY             | YES     | Hash based, stored in memory, useful for temporary tables                                        | NO           | NO   | NO         |
+| PERFORMANCE_SCHEMA | YES     | Performance Schema                                                                               | NO           | NO   | NO         |
+| Aria               | YES     | Crash-safe tables with MyISAM heritage                                                           | NO           | NO   | NO         |
+| InnoDB             | DEFAULT | Percona-XtraDB, Supports transactions, row-level locking, foreign keys and encryption for tables | YES          | YES  | YES        |
++--------------------+---------+--------------------------------------------------------------------------------------------------+--------------+------+------------+
+```
+
 ### mysql-control Second MariaDB 10.1
 
 ```
@@ -517,6 +588,23 @@ check MySQL server's default MySQL data directory variable value for `datadir`
 | datadir | /var/lib/mysql2/ |
 ```
 
+```
+/usr/bin/mysql-control 2 show-engines
+mysql -P 3307 -S /var/lib/mysql2/mysql.sock -e "SHOW ENGINES;"
++--------------------+---------+--------------------------------------------------------------------------------------------------+--------------+------+------------+
+| Engine             | Support | Comment                                                                                          | Transactions | XA   | Savepoints |
++--------------------+---------+--------------------------------------------------------------------------------------------------+--------------+------+------------+
+| CSV                | YES     | CSV storage engine                                                                               | NO           | NO   | NO         |
+| MRG_MyISAM         | YES     | Collection of identical MyISAM tables                                                            | NO           | NO   | NO         |
+| MyISAM             | YES     | MyISAM storage engine                                                                            | NO           | NO   | NO         |
+| SEQUENCE           | YES     | Generated tables filled with sequential values                                                   | YES          | NO   | YES        |
+| MEMORY             | YES     | Hash based, stored in memory, useful for temporary tables                                        | NO           | NO   | NO         |
+| PERFORMANCE_SCHEMA | YES     | Performance Schema                                                                               | NO           | NO   | NO         |
+| Aria               | YES     | Crash-safe tables with MyISAM heritage                                                           | NO           | NO   | NO         |
+| InnoDB             | DEFAULT | Percona-XtraDB, Supports transactions, row-level locking, foreign keys and encryption for tables | YES          | YES  | YES        |
++--------------------+---------+--------------------------------------------------------------------------------------------------+--------------+------+------------+
+```
+
 ### mysql-control Oracle MySQL 8.0
 
 ```
@@ -539,4 +627,22 @@ check MySQL server's default MySQL data directory variable value for `datadir`
 ```
 /usr/bin/mysql-control 8 mysqladmin var | grep datadir | tr -s ' ' 
 | datadir | /opt/mysql/data/ |
+```
+
+```
+/usr/bin/mysql-control 8 show-engines
+mysql -P 3407 -S /opt/mysql/data/mysql.sock -e "SHOW ENGINES;"
++--------------------+---------+----------------------------------------------------------------+--------------+------+------------+
+| Engine             | Support | Comment                                                        | Transactions | XA   | Savepoints |
++--------------------+---------+----------------------------------------------------------------+--------------+------+------------+
+| FEDERATED          | NO      | Federated MySQL storage engine                                 | NULL         | NULL | NULL       |
+| MEMORY             | YES     | Hash based, stored in memory, useful for temporary tables      | NO           | NO   | NO         |
+| InnoDB             | DEFAULT | Supports transactions, row-level locking, and foreign keys     | YES          | YES  | YES        |
+| PERFORMANCE_SCHEMA | YES     | Performance Schema                                             | NO           | NO   | NO         |
+| MyISAM             | YES     | MyISAM storage engine                                          | NO           | NO   | NO         |
+| MRG_MYISAM         | YES     | Collection of identical MyISAM tables                          | NO           | NO   | NO         |
+| BLACKHOLE          | YES     | /dev/null storage engine (anything you write to it disappears) | NO           | NO   | NO         |
+| CSV                | YES     | CSV storage engine                                             | NO           | NO   | NO         |
+| ARCHIVE            | YES     | Archive storage engine                                         | NO           | NO   | NO         |
++--------------------+---------+----------------------------------------------------------------+--------------+------+------------+
 ```

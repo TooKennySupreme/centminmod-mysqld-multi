@@ -17,8 +17,13 @@ mysql_cmd() {
   mysqlargb=$3
   mysqlargc=$4
   mysqlargd=$5
-  echo "$mysqlclient -P $PORT -S $SOCKET $mysqlarga $mysqlargb $mysqlargc $mysqlargd"
-  $mysqlclient -P $PORT -S $SOCKET $mysqlarga $mysqlargb $mysqlargc $mysqlargd
+  if [[ "$mysqlclient" = 'show-engines' ]]; then
+    echo "mysql -P $PORT -S $SOCKET -e \"SHOW ENGINES;\""
+    mysql -P $PORT -S $SOCKET -e "SHOW ENGINES;"
+  else
+    echo "$mysqlclient -P $PORT -S $SOCKET $mysqlarga $mysqlargb $mysqlargc $mysqlargd"
+    $mysqlclient -P $PORT -S $SOCKET $mysqlarga $mysqlargb $mysqlargc $mysqlargd
+  fi
 }
 
 #########################################################
@@ -53,6 +58,11 @@ mysql_cmd $2 $3 $4 $5 $6
     echo "mysql-control 2 mysqladmin ver"
     echo "mysql-control 3 mysqladmin ver"
     echo "mysql-control 8 mysqladmin ver"
+    echo 
+    echo "mysql-control 1 show-engines"
+    echo "mysql-control 2 show-engines"
+    echo "mysql-control 3 show-engines"
+    echo "mysql-control 8 show-engines"
     echo
     ;;
 esac
